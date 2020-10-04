@@ -1,0 +1,19 @@
+<div class="container" [ngClass]="{'blur': blur}">
+  <div style="margin: 2rem;">
+    Minesweeper
+  </div>
+  <div class="box">
+    <table>
+        <tr *ngFor="let arr of valueArr; let i = index"> 
+          <td *ngFor="let item of arr; let j = index" [ngClass]="[(item.isVisible && item.value !== -1) ? 'clickedtd' : 'unclickedtd']">
+            <button (click)="onClickNumber(i,j)" [ngClass]="[(item.isVisible && item.value !== -1) ? 'clickedButton' : 'unclickedButton']">
+              <span *ngIf="item.isVisible">
+                <span *ngIf="item.value === -1"><img src="assets/mine.png"></span>
+                <span *ngIf="item.value !== 0">{{item.value}}</span>
+              </span>
+            </button>
+          </td>
+        </tr>
+    </table>
+  </div>
+</div>
