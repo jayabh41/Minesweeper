@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class PopupComponent implements OnInit {
 
   @Input() showWinner = false;
+  @Input() score = 0;
   @Output() confirmation = new EventEmitter();
   constructor(public activeModal: NgbActiveModal) { }
 

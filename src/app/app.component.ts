@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   blur = false;
   count = 0;
   clickNumberCount = 0;
+  score = 0;
 
   constructor(private el: ElementRef, private modalService: NgbModal) {}
 
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   createMine() {
+    this.score = 0;
     this.clickNumberCount = 0;
     this.count = 0;
     this.blur = false;
@@ -35,7 +37,6 @@ export class AppComponent implements OnInit {
         this.newArr[x][y] = Math.floor(Math.random() * 5);
       }
     }
-    console.table(this.newArr);
 
     for (let x = 0; x < this.rows; x++) {
       this.valueArr[x] = [];
@@ -51,8 +52,6 @@ export class AppComponent implements OnInit {
         }
       }
     }
-    console.table(this.valueArr);
-    console.log(this.count);
   }
 
   getAdjacentElements(index1, index2) {
@@ -105,6 +104,7 @@ export class AppComponent implements OnInit {
     return count;
   }
   onClickMine(index1, index2, type) {
+    this.clickNumberCount = this.clickNumberCount - 1;
     this.blur = true;
     this.data = this.newArr[index1][index2];
     const modalRef = this.modalService.open(PopupComponent, {
@@ -115,6 +115,7 @@ export class AppComponent implements OnInit {
       windowClass: 'modal_container',
     });
     modalRef.componentInstance.showWinner = type;
+    modalRef.componentInstance.score = this.clickNumberCount;
     modalRef.componentInstance.confirmation.subscribe((res) => {
       modalRef.close();
       this.createMine();
@@ -124,7 +125,6 @@ export class AppComponent implements OnInit {
 
   onClickNumber(index1, index2) {
     this.data = this.valueArr[index1][index2];
-    // console.log(this.data);
     if (!this.data.isVisible) {
       this.clickNumberCount++;
       if (this.clickNumberCount === this.count) {
